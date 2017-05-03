@@ -3,7 +3,7 @@ from itertools import imap
 
 from fabric.contrib.files import exists
 from fabric.operations import run, _run_command
-from fabric.context_managers import cd
+from fabric.context_managers import cd, shell_env
 
 from offregister_fab_utils.apt import apt_depends
 from offutils import it_consumes
@@ -26,6 +26,7 @@ def install_node0(*args, **kwargs):
 
 def install_npm_package(*args, **kwargs):
     if 'npm_global_packages' in kwargs:
-        it_consumes(imap(lambda package: _run_command('npm install -g {package}'.format(package=package),
-                                                      sudo=kwargs.get('use_sudo', False))),
-                    kwargs['npm_global_packages'])
+        if shell_env(PATH='$HOME/n/bin:$PATH'):
+            it_consumes(imap(lambda package: _run_command('npm install -g {package}'.format(package=package),
+                                                          sudo=kwargs.get('use_sudo', False))),
+                        kwargs['npm_global_packages'])
