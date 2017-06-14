@@ -12,10 +12,12 @@ from offutils import it_consumes
 def install_node0(*args, **kwargs):
     apt_depends('curl', 'build-essential')
 
-    run_cmd = partial(_run_command, sudo=kwargs.get('use_sudo', False))
+    run_cmd = partial(_run_command, sudo=kwargs.get('node_sudo', kwargs.get('use_sudo', False)))
     if exists('n'):
         return
     run_cmd('mkdir -p Downloads')
+    print "install_node0::kwargs.get('use_sudo', False) =", kwargs.get('use_sudo', False)
+    print 'install_node0::kwargs =', kwargs
     with cd('Downloads'):
         script = 'n-install.bash'
         if not exists(script):
@@ -27,6 +29,7 @@ def install_node0(*args, **kwargs):
 def install_global_npm_packages1(*args, **kwargs):
     if 'npm_global_packages' in kwargs:
         with shell_env(PATH='$HOME/n/bin:$PATH'):
-            it_consumes(imap(lambda package: _run_command('npm install -g {package}'.format(package=package),
-                                                          sudo=kwargs.get('use_sudo', False)),
-                             kwargs['npm_global_packages']))
+            print "install_global_npm_packages1::kwargs.get('use_sudo', False) =", kwargs.get('use_sudo', False)
+            _run_command('npm install -g {packages}'.format(packages=' '.join(kwargs['npm_global_packages']),
+                                                            sudo=kwargs.get('node_sudo',
+                                                                            kwargs.get('use_sudo', False))))
