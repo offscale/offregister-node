@@ -1,12 +1,10 @@
 from functools import partial
-from itertools import imap
 
 from fabric.contrib.files import exists
 from fabric.operations import run, _run_command
 from fabric.context_managers import cd, shell_env
 
 from offregister_fab_utils.apt import apt_depends
-from offutils import it_consumes
 
 
 def install_node0(*args, **kwargs):
@@ -16,8 +14,6 @@ def install_node0(*args, **kwargs):
     if exists('n'):
         return
     run_cmd('mkdir -p Downloads')
-    print "install_node0::kwargs.get('use_sudo', False) =", kwargs.get('use_sudo', False)
-    print 'install_node0::kwargs =', kwargs
     with cd('Downloads'):
         script = 'n-install.bash'
         if not exists(script):
