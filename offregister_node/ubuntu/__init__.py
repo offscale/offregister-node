@@ -1,6 +1,6 @@
 from offregister_fab_utils.apt import apt_depends
 
-from offregister_node.utils import install_node, install_global_npm_packages
+from offregister_node.utils import install_global_npm_packages, install_node
 
 
 def install_node0(node_version="latest", *args, **kwargs):
