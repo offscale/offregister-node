@@ -4,7 +4,7 @@ from offregister_node.utils import install_global_npm_packages, install_node
 
 
 def install_node0(node_version="latest", *args, **kwargs):
-    apt_depends("curl", "build-essential")
+    apt_depends(c, "curl", "build-essential")
 
     return install_node(node_version=node_version, **kwargs)
 
