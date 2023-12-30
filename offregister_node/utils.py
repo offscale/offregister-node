@@ -2,7 +2,7 @@ from fabric.contrib.files import exists
 from offregister_fab_utils.fs import cmd_avail
 
 
-def install_node(node_version="latest", *args, **kwargs):
+def install_node(c, node_version="latest", *args, **kwargs):
     run_cmd = (
         c.sudo if kwargs.get("node_sudo", kwargs.get("use_sudo", False)) else c.run
     )
@@ -26,7 +26,7 @@ def install_node(node_version="latest", *args, **kwargs):
     return {"Node.js version installed": node_version}
 
 
-def install_global_npm_packages(*args, **kwargs):
+def install_global_npm_packages(c, *args, **kwargs):
     n_prefix = kwargs.get("N_PREFIX", "$HOME/n")
 
     if "npm_global_packages" in kwargs:
