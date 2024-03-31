@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from offregister_fab_utils.apt import apt_depends
 
 from offregister_node.utils import install_global_npm_packages, install_node
